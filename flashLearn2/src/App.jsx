@@ -152,31 +152,31 @@ const App = () => {
   ];
 
   // State to hold the remaining cards and the current card
-  const [remainingCards, setRemainingCards] = useState([...initialFlashcards]);
-  const [currentCard, setCurrentCard] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [flashcards, setFlashcards] = useState(initialFlashcards);
 
-  // Function to handle displaying the next card
   const handleNextCard = () => {
-    if (remainingCards.length > 0) {
-      const randomIndex = Math.floor(Math.random() * remainingCards.length);
-      const selectedCard = remainingCards[randomIndex];
-      setCurrentCard(selectedCard);
-
-      // Remove the selected card from remainingCards
-      const updatedCards = remainingCards.filter(
-        (_, index) => index !== randomIndex
-      );
-      setRemainingCards(updatedCards);
-    } else {
-      // If no cards are left, reset the deck
-      resetDeck();
+    if (currentIndex < flashcards.length - 1) {
+      setCurrentIndex(currentIndex + 1);
     }
   };
 
-  // Function to reset the deck when all cards have been shown
-  const resetDeck = () => {
-    setRemainingCards([...initialFlashcards]);
-    setCurrentCard(null);
+  const handlePreviousCard = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+    }
+  };
+
+  const handleAnswerSubmission = (isCorrect) => {
+    if (isCorrect) {
+      setCorrectAnswers(correctAnswers + 1);
+    }
+  };
+
+  const handleShuffleCards = () => {
+    setFlashcards([...flashcards].sort(() => Math.random() - 0.5));
+    setCurrentIndex(0);
   };
 
   return (
@@ -186,20 +186,16 @@ const App = () => {
         Description: A simple flashcard app to help you study and learn various
         topics.
       </p>
-      <p>Total Cards Remaining: {remainingCards.length}</p>
-      {currentCard ? (
-        <Flashcard
-          question={currentCard.question}
-          answer={currentCard.answer}
-          category={currentCard.category}
-          difficulty={currentCard.difficulty}
-        />
-      ) : (
-        <p>Click "Next Card" to start studying!</p>
-      )}
-      <button onClick={handleNextCard}>
-        {remainingCards.length > 0 ? "Next Card" : "Reset Deck"}
-      </button>
+      <p>Correct Answers: {correctAnswers}</p>
+      <button onClick={handleShuffleCards}>Shuffle Cards</button>
+      <Flashcard
+        card={flashcards[currentIndex]}
+        currentIndex={currentIndex}
+        totalCards={flashcards.length}
+        onNext={handleNextCard}
+        onPrevious={handlePreviousCard}
+        onSubmitAnswer={handleAnswerSubmission}
+      />
     </div>
   );
 };
