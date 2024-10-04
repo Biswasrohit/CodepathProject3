@@ -1,4 +1,4 @@
-# Web Development Project 2 - _FlashLearn!_
+# Web Development Project 2 - _FlashLearn 2!_
 
 Submitted by: **Rohit Biswas**
 
