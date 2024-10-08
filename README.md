@@ -28,7 +28,7 @@ The following **additional** features are implemented:
 
 ## Video Walkthrough
 
-Here's a walkthrough of implemented user stories:
+Here's a walkthrough of implemented user features:
 
 <img src='https://i.imgur.com/7g3ny12.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
@@ -44,6 +44,8 @@ GIF created with Kap
 ## Notes
 
 Describe any challenges encountered while building the app.
+
+It was difficult to set up the card to flip since I had all the prompt elements on the actual card. I put the elements under the card and used state to flip the card.
 
 ## License
 
